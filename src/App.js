@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import QRCode from "qrcode.react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function QRCodeGenerator() {
+    const [qrCode, setQrCode] = useState("");
+    const [input, setInput] = useState("");
+    function handleGenerateQrCode() {
+        setQrCode(input);
+        //setInput(""); - when you want to reset it on pressed button
+    }
+    return (<div>
+            <h1>QR Code Generator</h1>
+            <div>
+                <input
+                    onChange={(e) => setInput(e.target.value)}
+                    type="text"
+                    name="qr-code"
+                    value={input}
+                    placeholder="Enter your value"/>
+                <button
+                    disabled={input && input.trim() !== "" ? false : true}
+                    onClick={handleGenerateQrCode}>Generate</button>
+            </div>
+            <div>
+                {qrCode && <QRCode id="qr-code-value" value={qrCode} size={400} bgColor="#fff" />}
+            </div>
+        </div>
+    );
 }
-
-export default App;
